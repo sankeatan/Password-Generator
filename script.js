@@ -108,6 +108,8 @@ function constructPassword(event) {
     var newPassword = [];
     
     //adds character arrays to possibleCharacters array
+    if ((upperCaseButton.checked || lowerCaseButton.checked || numericCaseButton.checked || specialCaseButton.checked) == false){
+      alert("You must select at least one kind of character!");}
     if (upperCaseButton.checked) {possibleCharacters.push(upperCasedCharacters);}
     if (lowerCaseButton.checked) {possibleCharacters.push(lowerCasedCharacters);}
     if (numericCaseButton.checked) {possibleCharacters.push(numericCharacters);}
