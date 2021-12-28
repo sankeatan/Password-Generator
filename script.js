@@ -94,53 +94,50 @@ function passwordForm() {
   passwordCriteria.style.display ="block";
   generateBtn.style.display = "none";
   var characterButton = document.getElementById("charNumber");
-
-  var numberOfCharacters = document.getElementById("charNumber").value;
-  var upperCase = document.getElementById("uppercase").checked;
-  var lowerCase = document.getElementById("lowercase").checked;
-  var numericCase = document.getElementById("numeric").checked;
-  var specialCase = document.getElementById("special-characters").checked;  
+  var upperCaseButton = document.getElementById("uppercase");
+  var lowerCaseButton = document.getElementById("lowercase");
+  var numericCaseButton = document.getElementById("numeric");
+  var specialCaseButton = document.getElementById("special-characters");  
 
   passwordCriteria.addEventListener("submit", constructPassword);
-  characterButton.addEventListener("click", updateCharacterNumber);
-  //updates number of characters
-  function updateCharacterNumber(event){
-    numberOfCharacters = document.getElementById("charNumber").value;
-  }  
 
 //submits password preferences and writes new password
 function constructPassword(event) {
     event.preventDefault();
     var possibleCharacters = [];
     var newPassword = [];
+    
     //adds character arrays to possibleCharacters array
-    if (upperCase == 'checked') {possibleCharacters.push(upperCasedCharacters);}
-    if (lowerCase == 'checked') {possibleCharacters.push(lowerCasedCharacters);}
-    if (numericCase == 'checked') {possibleCharacters.push(numericCharacters);}
-    if (specialCase == 'checked') {possibleCharacters.push(specialCharacters);}
-    console.log(possibleCharacters);
-
-  
+    if (upperCaseButton.checked) {possibleCharacters.push(upperCasedCharacters);}
+    if (lowerCaseButton.checked) {possibleCharacters.push(lowerCasedCharacters);}
+    if (numericCaseButton.checked) {possibleCharacters.push(numericCharacters);}
+    if (specialCaseButton.checked) {possibleCharacters.push(specialCharacters);}
 
     //iterates through the 2d array of possible characters 
-    for(var i = 0; i < numberOfCharacters; i++){
+    for(var i = 0; i < characterButton.value; i++){
       var rndIndex = Math.floor(possibleCharacters.length*Math.random());
-      console.log(rndIndex);
-      var rndCharacter = Math.floor(possibleCharacters[rndIndex].length*Math.random());
-      console.log(rndCharacter);
+      var psblCharRndIndex = possibleCharacters[rndIndex];
+      var rndCharacter = Math.floor(psblCharRndIndex.length*Math.random());
       newPassword.push(possibleCharacters[rndIndex][rndCharacter]);
     }
+    //closes form, returns button
     generateBtn.style.display="block";
+    generateBtn.style.textAlign="center";
     passwordCriteria.style.display ="none";
 
     //sets password and passwordText
-    password = newPassword.toString();
-    passwordText.value = password;
+    password = newPassword.join('');
+    passwordText.value = password.toString();
+    
+
+    //resets values
+    var possibleCharacters = [];
+    var newPassword = [];
   }
-  // listens for generate button click
 
 }
 
+//listens for generate button click
 generateBtn.addEventListener("click", passwordForm);
 
 
