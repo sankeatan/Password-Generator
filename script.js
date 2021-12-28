@@ -93,27 +93,20 @@ function passwordForm() {
   var passwordCriteria = document.getElementById("password-criteria");
   passwordCriteria.style.display ="block";
   generateBtn.style.display = "none";
+  var characterButton = document.getElementById("charNumber");
 
   var numberOfCharacters = document.getElementById("charNumber").value;
   var upperCase = document.getElementById("uppercase").checked;
   var lowerCase = document.getElementById("lowercase").checked;
   var numericCase = document.getElementById("numeric").checked;
-  var specialCase = document.getElementById("special-characters").checked;
-  passwordCriteria.addEventListener("submit", constructPassword);
-  console.log(numberOfCharacters);
-  
+  var specialCase = document.getElementById("special-characters").checked;  
 
-  /*var inputSelection = document.getElementsByTagName(input);
-  inputSelection.addEventListener("click", function(){
-    if(this.type === "radio") {
-      if (this.checked === fasle)
-      {
-        this.checked = true;
-      } else {
-        this.checked = false;
-      }
-    }
-  })*/
+  passwordCriteria.addEventListener("submit", constructPassword);
+  characterButton.addEventListener("click", updateCharacterNumber);
+  //updates number of characters
+  function updateCharacterNumber(event){
+    numberOfCharacters = document.getElementById("charNumber").value;
+  }  
 
 //submits password preferences and writes new password
 function constructPassword(event) {
@@ -127,30 +120,28 @@ function constructPassword(event) {
     if (specialCase == 'checked') {possibleCharacters.push(specialCharacters);}
     console.log(possibleCharacters);
 
-    function randomIndex (){
-      var rndIndex = Math.floor(this.length*Math.random());
-      return rndIndex;
-    }
+  
 
-    //iterates through newPassword to add characters ot it.
+    //iterates through the 2d array of possible characters 
     for(var i = 0; i < numberOfCharacters; i++){
-      newPassword.push(possibleCharacters[randomIndex()][randomIndex()]);
+      var rndIndex = Math.floor(possibleCharacters.length*Math.random());
+      console.log(rndIndex);
+      var rndCharacter = Math.floor(possibleCharacters[rndIndex].length*Math.random());
+      console.log(rndCharacter);
+      newPassword.push(possibleCharacters[rndIndex][rndCharacter]);
     }
-    console.log(numberOfCharacters);
-    console.log(password);
-    
     generateBtn.style.display="block";
     passwordCriteria.style.display ="none";
 
     //sets password and passwordText
     password = newPassword.toString();
-    console.log(password)
-
     passwordText.value = password;
   }
+  // listens for generate button click
+
 }
 
-
-// listens for generate button click
 generateBtn.addEventListener("click", passwordForm);
+
+
 
